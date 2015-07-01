@@ -53,13 +53,16 @@ public class IgnoreGroup extends PlayerCommandMiddle{
 			return true;
 		}
 		String ignore = group.getName();
-		
 		String name = NameAPI.getCurrentName(player.getUniqueId());
+		String curGroup = chatMan.getGroupChatting(name);
 		if(chatMan.addIgnoringGroup(name, ignore)){
 			//Player added to list
 			String debugMessage = "Player ignored Group, Player: " + name + " Group: " + ignore;
 			logger.debug(debugMessage);
 			sender.sendMessage(ChatColor.YELLOW + "You have ignored: " + ignore);
+			if(curGroup == "GROUP" + ignore){
+				chatMan.removeGroupChat(name);
+			}
 			return true;
 		} else{
 			//player removed from list
